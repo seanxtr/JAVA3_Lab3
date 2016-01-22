@@ -170,8 +170,8 @@ public class SparseMat<E> implements Cloneable{
             tempNode = FindNode(i,k);
             
             // print out data value
-            System.out.printf("%7s",tempNode == null ? 
-               defaultVal.toString() : tempNode.data.toString());
+            System.out.printf("%7.1f",tempNode == null ? 
+               defaultVal : tempNode.data);
          }
          System.out.print('\n');
       }
