@@ -1,6 +1,8 @@
 package PartB;
 
 import java.util.Iterator;
+
+import PartB.SparseMat.MatNode;
 import cs_1c.FHlinkedList;
 
 public class SparseMatWMult extends SparseMat<Double>
@@ -30,9 +32,9 @@ public class SparseMatWMult extends SparseMat<Double>
       if (matA.rowSize != matB.colSize || matA.colSize != matB.rowSize)
            return false;
       
-      FHlinkedList<MatNode> row;
-      Iterator<MatNode> itr;
-      MatNode tempNode;
+      FHlinkedList<MatNode> rowA, rowB;
+      Iterator<MatNode> itrA, itrB;
+      MatNode tempNodeA, tempNodeB;
       double sum;
       
       // resize current matrix
@@ -43,27 +45,55 @@ public class SparseMatWMult extends SparseMat<Double>
       
       // iterate through each row in matrix A
       for (int i = 0; i < matA.rowSize; i++){
-         
+         rowA = matA.rows.get(i);
          // skip the row when all its columns are default value 0
-         if (matA.rows.get(i).size() <= 0)
+         if (rowA.size() <= 0)
             continue;
          
-         // iterate through each column in matrix B
-         for (int k = 0; k < matB.colSize; k++){
-            sum = 0;
-            row = matA.rows.get(i);
-            itr = row.iterator();
-             // go through the linked list at the row
-             while (itr.hasNext()){
-                tempNode = (MatNode)itr.next();
-                
-                sum += tempNode.data * matB.get(tempNode.col, k);
-                
-             }
+         // iterate through each column in the row
+         itrA = rowA.iterator();
+         while (itrA.hasNext()){
+             tempNodeA = (MatNode)itrA.next();
              
-             this.set(i, k, sum);
+             // get the corresponding row in matrix B
+             rowB = matB.rows.get(tempNodeA.col);
+             
+             // iterate through columns in row
+             itrB = rowB.iterator();
+             while (itrB.hasNext()){
+                tempNodeB = (MatNode)itrB.next();
+                
+                this.increment(i, tempNodeB.col, tempNodeA.data * tempNodeB.data);
+             }
          }
       }
       return true;
    }
+   
+   public boolean increment(int r, int c, double x){
+	      if (r < 0 || r > rowSize - 1 ||
+	         c < 0 || c > colSize - 1)
+	         return false;
+	      
+	      MatNode targetNode = FindNode(r,c);
+	      
+	      if (targetNode != null){
+	         if (x == 0.0){
+	            // remove target node
+	            rows.get(r).remove(targetNode);
+	         }
+	         else
+	            // add value to existing one
+	            targetNode.data += x;
+	      }
+	      else
+	      {
+	         if (x != 0.0){
+	            // add new node
+	            rows.get(r).add(new MatNode(c, x));
+	         }
+	      }
+	      
+	      return true;
+	   }
 }

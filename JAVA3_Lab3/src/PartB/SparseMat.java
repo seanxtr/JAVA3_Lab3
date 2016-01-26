@@ -115,7 +115,7 @@ public class SparseMat<E> implements Cloneable{
     * @param c      column index
     * @return       target node if exists, otherwise null
     */
-   private MatNode FindNode(int r, int c) {
+   protected MatNode FindNode(int r, int c) {
       // get row
       FHlinkedList<MatNode> row = rows.get(r);
       Iterator<MatNode> itr = row.iterator();
@@ -170,7 +170,7 @@ public class SparseMat<E> implements Cloneable{
             tempNode = FindNode(i,k);
             
             // print out data value
-            System.out.printf("%7.1f",tempNode == null ? 
+            System.out.printf("%9.3f",tempNode == null ? 
                defaultVal : tempNode.data);
          }
          System.out.print('\n');
