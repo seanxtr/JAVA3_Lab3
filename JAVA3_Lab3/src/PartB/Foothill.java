@@ -7,23 +7,75 @@ public class Foothill {
 
       public static void main(String[] args) throws Exception
       {
-         int MAT_SIZE = 3;
+         int MAT_SIZE = 5;
     	  
          SparseMatWMult matA = new SparseMatWMult(MAT_SIZE, MAT_SIZE, 0.);
          SparseMatWMult matB = new SparseMatWMult(MAT_SIZE, MAT_SIZE, 0.);
          SparseMatWMult matC = new SparseMatWMult(MAT_SIZE, MAT_SIZE, 0.);
          
+         // fill data into matrix A
+         matA.set(0, 0, 1.);
+         matA.set(0, 1, 2.);
+         matA.set(0, 2, 3.);
+         matA.set(0, 3, 4.);
+         matA.set(0, 4, 5.);
+         
+         matA.set(1, 0, -1.);
+         matA.set(1, 1, -2.);
+         matA.set(1, 2, -3.);
+         matA.set(1, 3, -4.);
+         matA.set(1, 4, -5.);
+         
+         matA.set(2, 0, 1.);
+         matA.set(2, 1, 3.);
+         matA.set(2, 2, 1.);
+         matA.set(2, 3, 3.);
+         matA.set(2, 4, 1.);
+         
+         matA.set(3, 0, 0.);
+         matA.set(3, 1, 1.);
+         matA.set(3, 2, 0.);
+         matA.set(3, 3, 1.);
+         matA.set(3, 4, 0.);
+         
+         matA.set(4, 0, -1.);
+         matA.set(4, 1, -1.);
+         matA.set(4, 2, -1.);
+         matA.set(4, 3, -1.);
+         matA.set(4, 4, -1.);
+         
+         // fill data into matrix B
+         matB.set(0, 0, 2.);
+         matB.set(0, 1, 1.);
+         matB.set(0, 2, 5.);
+         matB.set(0, 3, 0.);
+         matB.set(0, 4, 2.);
+         
+         matB.set(1, 0, 1.);
+         matB.set(1, 1, 4.);
+         matB.set(1, 2, 3.);
+         matB.set(1, 3, 2.);
+         matB.set(1, 4, 7.);
+         
+         matB.set(2, 0, 4.);
+         matB.set(2, 1, 4.);
+         matB.set(2, 2, 4.);
+         matB.set(2, 3, 4.);
+         matB.set(2, 4, 4.);
+         
+         matB.set(3, 0, 7.);
+         matB.set(3, 1, 1.);
+         matB.set(3, 2, -1.);
+         matB.set(3, 3, -1.);
+         matB.set(3, 4, -1.);
+         
+         matB.set(4, 0, 0.);
+         matB.set(4, 1, 0.);
+         matB.set(4, 2, 8.);
+         matB.set(4, 3, -1.);
+         matB.set(4, 4, -6.);
+         
          System.out.println("Testing case #1 to check the algorithm");
-         
-         for (int i = 0; i < MAT_SIZE; i++)
-         {
-             for (int k = 0; k < MAT_SIZE; k++)
-             {
-                 matA.set(i, k, Math.random() * 10);
-                 matB.set(i, k, Math.random() * 10);
-             }
-         }
-         
          System.out.println("Matrix A");
          matA.showSubSquare(0, MAT_SIZE);
          System.out.println();
@@ -40,7 +92,7 @@ public class Foothill {
          int testCaseNumber = 2;
          
          double[] matrixSaturation = new double[] {0.002, 0.01, 0.05, 0.1};
-         int[] matrixSize = new int[] {50, 100, 200, 400, 800, 1600, 3200};
+         int[] matrixSize = new int[] {10,15, 25, 50, 100, 200, 400, 800, 1600, 3200};
          for (int i = 0; i < matrixSaturation.length; i++){
         	 for (int k = 0; k < matrixSize.length; k++){
         		 
@@ -90,7 +142,6 @@ public class Foothill {
                     + tidy.format( (stopTime - startTime) / 1e9)
                     + " seconds.");
 
-                 System.out.println();
                  testCaseNumber++;
         	 }
          }
@@ -176,3 +227,31 @@ Testing case #28 Saturation[0.100000] Size [1600] Elapsed Time: 130.2968 seconds
 Testing case #29 Saturation[0.100000] Size [3200] Elapsed Time: 2,177.481 seconds.
 
 ************************************/
+
+/*********** Discussion *******************
+
+The timing for matrix multiplication is big-oh of M^4 because
+the code contains four nested loops. one of them has size of M, and 
+the others have size of M only in worst case situation.
+
+The theta estimate for the method is M^4*S^3 where S states 
+for saturation percentage. The outer loop always has iteration of M,
+but all three inner while loops have size of M*S. This is why this method 
+runs faster with low saturation
+
+regardless the saturation level of the matrix
+
+Here is a table of run time relative to matrix size when S = 1%:
+Size            Time (s)
+
+
+Q1: The smallest size to give a non-zero time is 50
+Q2: when size doubled from 800 to 1600, time increase 15 times
+when size tripled from 800 to 2400, time goes up 61 times
+when size quadrupled from 800 to 3200, time goes up 171 times
+Q3: The largest size I can get is 3200
+Q4: The data meets the estimates. For instance, when size doubled,
+I would expect run time to increase 2^4 = 16 times if the estimate is accurate.
+The acutal results are quite close.
+
+*******************************************/

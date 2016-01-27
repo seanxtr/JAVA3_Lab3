@@ -412,11 +412,13 @@ Size            Time (s)
 2400          246.0000
 3200          686.0000
 
-The smallest size to give a non-zero time is 12
-The largest size I can get is 3200
-when size doubled from 800 to 1600, time increase 15 times
+Q1: The smallest size to give a non-zero time is 12
+Q2: when size doubled from 800 to 1600, time increase 15 times
 when size tripled from 800 to 2400, time goes up 61 times
 when size quadrupled from 800 to 3200, time goes up 171 times
-
+Q3: The largest size I can get is 3200
+Q4: The data does quite meet the estimates. For instance, when size tripled,
+I would expect run time to increase 3^3 = 27 times if the estimate is accurate. 
+However, I observed a increase of 61 times. 
 
 *******************************************/
