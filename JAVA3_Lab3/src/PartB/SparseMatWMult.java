@@ -9,8 +9,7 @@ import java.util.Iterator;
 import PartB.SparseMat.MatNode;
 import cs_1c.FHlinkedList;
 
-public class SparseMatWMult extends SparseMat<Double>
-{
+public class SparseMatWMult extends SparseMat<Double> {
    /**
     * 3-parameter constructor
     * @param numRows
@@ -27,8 +26,7 @@ public class SparseMatWMult extends SparseMat<Double>
     * @param matB
     * @return
     */
-   public boolean matMult(SparseMatWMult matA, SparseMatWMult matB)
-   {
+   public boolean matMult(SparseMatWMult matA, SparseMatWMult matB) {
       if (matA.rowSize < 1 || matA.colSize < 1 ||
           matB.rowSize < 1 || matB.colSize < 1)
            return false;
@@ -89,9 +87,7 @@ public class SparseMatWMult extends SparseMat<Double>
 	         else
 	            // add value to existing one
 	            targetNode.data += x;
-	      }
-	      else
-	      {
+	      } else {
 	         if (x != 0.0){
 	            // add new node
 	            rows.get(r).add(new MatNode(c, x));

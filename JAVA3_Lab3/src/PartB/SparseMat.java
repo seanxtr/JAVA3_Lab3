@@ -97,9 +97,7 @@ public class SparseMat<E> implements Cloneable{
          else
             // update target node data
             targetNode.data = x;
-      }
-      else
-      {
+      } else {
          if (!x.equals(defaultVal)){
             // add new node
             rows.get(r).add(new MatNode(c, x));
