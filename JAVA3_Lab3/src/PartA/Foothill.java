@@ -5,7 +5,7 @@ import java.util.Locale;
 
 public class Foothill
 {
-   final static int MAT_SIZE = 3200;
+   final static int MAT_SIZE = 2400;
    final static double SMALL_PCT = 0.1;
    final static double DEFAULT_VALUE = 0.0;
    
@@ -337,6 +337,32 @@ Result matrix after multiplication:
 Size = 1600 Mat. Mult. Elapsed Time: 60.1127 seconds.
 
 Orignial matrix:
+  0.774    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0
+    0.0    0.0    0.0    0.0    0.0    0.0  0.447    0.0    0.0    0.0
+    0.0  0.011    0.0    0.0  0.580    0.0    0.0    0.0    0.0    0.0
+    0.0    0.0    0.0    0.0  0.319    0.0  0.029    0.0    0.0    0.0
+    0.0    0.0    0.0  0.075    0.0    0.0    0.0    0.0    0.0    0.0
+    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0
+    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0
+  0.450    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0
+    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0
+    0.0    0.0    0.0  0.728  0.679    0.0    0.0    0.0    0.0    0.0
+
+Result matrix after multiplication:
+  6.623  3.387  5.386  5.569  4.089  6.486  5.180  6.198  5.314  4.669
+  3.789  6.640  7.410  6.963  4.194  3.804  5.942  3.775  4.498  5.481
+  9.004  5.935  3.568  5.654  6.037  3.367  6.550  4.613  8.683  7.442
+  7.426  6.721  7.108  4.027  5.108  9.359  5.357  6.420  9.079  7.145
+  6.296  8.936  7.001  5.966  7.978  5.809  5.299  5.425  6.983  3.739
+  7.337  6.678  2.821  6.277  5.260  6.660  5.585  6.578  3.615  7.332
+  5.006  5.334  4.856  6.102  7.258  3.573  2.741  5.661  4.967  7.032
+  9.258  6.406  7.773  4.169  6.908  4.788  4.954  4.078  7.869  5.754
+  7.389  5.473  4.753  5.922  4.848  2.708  4.098  4.142  6.603  9.642
+  4.777  5.061  4.183  5.356  7.281  4.456  6.590  6.134  6.776  4.285
+
+Size = 2400 Mat. Mult. Elapsed Time: 246.3407 seconds.
+
+Orignial matrix:
     0.0  0.454  0.445    0.0    0.0    0.0    0.0    0.0    0.0    0.0
     0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0
     0.0    0.0    0.0    0.0    0.0    0.0    0.0  0.344    0.0    0.0
@@ -361,5 +387,36 @@ Result matrix after multiplication:
   5.355  8.055  8.197  10.37  7.133  9.904  5.449  7.369  11.43  7.655
 
 Size = 3200 Mat. Mult. Elapsed Time: 685.7656 seconds.
+
+*******************************************/
+
+/*********** Discussion *******************
+
+The timing for matrix multiplication is big-oh of N^3 because
+the code contains three nested loops each has size of N
+
+The theta estimate for the method is also N^3 for each loop has N turns
+regardless the saturation level of the matrix
+
+Here is a table of run time relative to matrix size:
+Size            Time (s)
+11              0.0000
+12              0.0001
+50              0.0008
+100             0.0041
+200             0.0152
+400             0.1238
+800             4.0000
+1200           22.0000
+1600           60.0000
+2400          246.0000
+3200          686.0000
+
+The smallest size to give a non-zero time is 12
+The largest size I can get is 3200
+when size doubled from 800 to 1600, time increase 15 times
+when size tripled from 800 to 2400, time goes up 61 times
+when size quadrupled from 800 to 3200, time goes up 171 times
+
 
 *******************************************/
