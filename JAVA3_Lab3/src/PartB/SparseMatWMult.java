@@ -1,5 +1,9 @@
 package PartB;
 
+/**
+ * SparseMatMult extends sparse matrix class and implement
+ * the functionality of faster matrix multiplication
+ */
 import java.util.Iterator;
 
 import PartB.SparseMat.MatNode;
